@@ -5,11 +5,11 @@ import numpy
 import re
 import os
 from os import path
+import gunicorn
+import PySocks
 import requests
 #from flask import Flask, request
-subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'requests[socks]')
-import 
-					   
+
 subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'praat-parselmouth'])
 import parselmouth
 from parselmouth.praat import call
@@ -17,6 +17,8 @@ from parselmouth.praat import call
 subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pytelegrambotapi'])
 import telebot
 from telebot import types, apihelper
+
+apihelper.proxy = {'https':'socks5://220303327:u7WVqr6c@ss-01.s5.ynvv.cc:999'}
 
 ik_dict = {
 	'ик-1': (20,30,32,37,37,40,40,38,41,50,60,63,71,80,85,86,88,86,78,65,58,51,45,40,36,32,23,16,8,-1,-7,-15,-22,-27,-32,-38,-44,-49,-51,-52,-55,-54,-52,-49,-45,-47,-51,-54,-59,-62,-64,-66,-67,-67,-68,-69,-70,-71,-76,-79,-80,-81,-82,-82,-83),
