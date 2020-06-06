@@ -89,7 +89,7 @@ HEROKU_APPNAME = 'really-usable-bot'
 '''
 @bot.message_handler(commands = ['start'])
 def start_message(message):
-	main_markup = types.ReplyKeyboardMarkup(True)
+	main_markup = types.ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = False)
 	main_markup.row('/text', '/gender', '/listen')
 	main_markup.row('/int', '/density', '/get')
 	bot.send_message(message.chat.id, 'привет! я могу эмоционально окрасить твой маленький кусок текста.\n\nнажми /text, чтобы ввести текст.')#, reply_markup = main_markup)
@@ -109,7 +109,7 @@ def text_input(message):
 #
 @bot.message_handler(commands = ['gender'])
 def change_gender(message):
-	gender_markup = types.ReplyKeyboardMarkup(True)
+	gender_markup = types.ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
 	gender_markup.row('мужской', 'женский')
 	sent = bot.send_message(message.chat.id, 'выбери голос:', reply_markup = gender_markup)
 	bot.register_next_step_handler(sent, gender_input)
@@ -124,7 +124,7 @@ def gender_input(message):
 #
 @bot.message_handler(commands = ['listen'])
 def listen_choose(message):
-	listen_markup = types.ReplyKeyboardMarkup(True)
+	listen_markup = types.ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
 	listen_markup.row('да', 'нет')
 	sent = bot.send_message(message.chat.id, 'хочешь послушать озвученный текст без обработки?', reply_markup = listen_markup)
 	bot.register_next_step_handler(sent, listen_input)
@@ -148,7 +148,7 @@ def listen_input(message):
 #
 @bot.message_handler(commands = ['ik'])
 def change_ik(message):
-	ik_markup = types.ReplyKeyboardMarkup(True)
+	ik_markup = types.ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
 	ik_markup.row('ик-1', 'ик-2', 'ик-3')
 	ik_markup.row('ик-4', 'ик-5', 'ик-6')
 	sent = bot.send_message(message.chat.id, 'выбери интонационную конструкцию:', reply_markup = ik_markup)
@@ -167,7 +167,7 @@ def ik_input(message):
 #
 @bot.message_handler(commands = ['density'])
 def change_density(message):
-	density_markup = types.ReplyKeyboardMarkup(True)
+	density_markup = types.ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
 	density_markup.row('1', '2')
 	density_markup.row('3', '4')
 	sent = bot.send_message(message.chat.id, 'выбери точность от 1 до 4. чем больше точность, тем плавнее интонационная кривая.\n\nхз зачем это надо, но пусть будет. это все будет развиваться в будущих версиях бота, так что stay tuned', reply_markup = density_markup)
@@ -186,7 +186,7 @@ def density_input(message):
 #
 @bot.message_handler(commands = ['get'])
 def get_choose(message):
-	get_markup = types.ReplyKeyboardMarkup(True)
+	get_markup = types.ReplyKeyboardMarkup(resize_keyboard = True, one_time_keyboard = True)
 	get_markup.row('да, капитан')
 	get_markup.row('нет, капитан')
 	sent = bot.send_message(message.chat.id, 'ты готов?', reply_markup = get_markup)
