@@ -121,7 +121,7 @@ def listen_input(message):
 		raw_audio = open(f'/{username}/foo.wav', rb)
 		if message == 'да':
 			bot.send_voice(message.chat.id, raw_audio)
-            bot.send_message(message.chat.id, 'нравится? если не очень, поменяй голос, нажав на /gender.\n\nа если все устраивает, нажми /int, чтобы выбрать интонационную конструкцию, в которой ты хочешь слышать свой микротекст.', reply_markup = main_markup)
+			bot.send_message(message.chat.id, 'нравится? если не очень, поменяй голос, нажав на /gender.\n\nа если все устраивает, нажми /int, чтобы выбрать интонационную конструкцию, в которой ты хочешь слышать свой микротекст.', reply_markup = main_markup)
 		elif message == 'нет':
 			bot.send_message(message.chat.id, 'ну ладно, как хочешь.\n\nнажми /int, чтобы выбрать интонационную конструкцию, в которой ты хочешь слышать свой микротекст.', reply_markup = main_markup)
 		else:
