@@ -64,8 +64,11 @@ global gender
 global ik
 global density
 #_______________________________________________________________________________
-
-bot = telebot.TeleBot('1270782782:AAGAMAKT8d6tCCe6a4n8ByduSelw13-RCHs')
+TOKEN = '1270782782:AAGAMAKT8d6tCCe6a4n8ByduSelw13-RCHs'
+bot = telebot.TeleBot(TOKEN)
+#
+PORT = int(os.environ.get('PORT', '8443'))
+HEROKU_APPNAME = 'really-usable-bot'
 #
 @bot.message_handler(commands = ['start'])
 def start_message(message):
@@ -182,6 +185,7 @@ def get_input(message):
             bot.send_message(message.chat.id, 'для чего люди придумали кнопки?\n\nнажми /get еще раз. или не нажимай, раз не готов.', reply_markup = main_markup)
     else:
         bot.send_message(message.chat.id, 'что-то пошло не так. скорее всего, ты ввел не все параметры.\n\nпонажимай на /text, /gender, /ik и /density.', reply_markup = main_markup)
+
 #
 while True:
 	try:
