@@ -60,9 +60,16 @@ def modify(ik, density, username):
 		pass
 
 global text
+text = None
+
 global gender
+gender = None
+
 global ik
+ik = None
+
 global density
+density = None
 #_______________________________________________________________________________
 TOKEN = '1270782782:AAGAMAKT8d6tCCe6a4n8ByduSelw13-RCHs'
 bot = telebot.TeleBot(TOKEN)
