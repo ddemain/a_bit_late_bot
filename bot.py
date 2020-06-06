@@ -6,6 +6,7 @@ import re
 import os
 from os import path
 import requests
+from flask import Flask, request
 
 subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'praat-parselmouth'])
 import parselmouth
@@ -73,6 +74,7 @@ density = None
 #_______________________________________________________________________________
 TOKEN = '1270782782:AAGAMAKT8d6tCCe6a4n8ByduSelw13-RCHs'
 bot = telebot.TeleBot(TOKEN)
+server = Flask(__name__)
 #
 PORT = int(os.environ.get('PORT', '8443'))
 HEROKU_APPNAME = 'really-usable-bot'
@@ -199,14 +201,29 @@ def get_input(message):
 	else:
 		bot.send_message(message.chat.id, 'что-то пошло не так. скорее всего, ты ввел не все параметры.\n\nпонажимай на /text, /gender, /ik и /density.')#, reply_markup = main_markup)
 #
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+	bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+	return "!", 200
+
+
+@server.route('/')
+def webhook():
+	bot.remove_webhook()
+	bot.set_webhook(url=f'https://{HEROKU_APPNAME}.herokuapp.com/' + TOKEN)
+	return "!", 200
+
+server.run(host="0.0.0.0", port=PORT)
+
+#__________________________________ эксперименты________________________________
+
+'''
 while True:
 	try:
 		bot.infinity_polling(True)
 	except Exception:
 		time.sleep(1)
-
-#__________________________________ эксперименты________________________________
-
+'''
 
 '''
 gender_list = ['мужской', 'женский']
