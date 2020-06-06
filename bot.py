@@ -164,7 +164,7 @@ def density_input(message):
 		bot.send_message(message.chat.id, 'круто. осталось только нажать /get...', reply_markup = main_markup)
 	elif type(message) == int or type(message) == float:
 		bot.send_message(message.chat.id, 'это не имеет смысла, поверь.\n\nнажми /density, чтобы выбрать из имеющихся.', reply_markup = main_markup)
-    else:
+	else:
 		bot.send_message(message.chat.id, 'для чего люди придумали кнопки?\n\nнажми /density еще раз.', reply_markup = main_markup)
 #
 @bot.message_handler(commands = ['get'])
