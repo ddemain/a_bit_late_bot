@@ -108,7 +108,7 @@ def change_gender(message):
 def gender_input(message):
 	msg = message.text
 	global gender
-	if gender == 'мужской' or gender == 'женский':
+	if msg == 'мужской' or  msg == 'женский':
 		gender = msg
 		bot.send_message(message.chat.id, 'хорошо. теперь нажми /listen, если еще не нажимал.')#, reply_markup = main_markup)
 	else:
