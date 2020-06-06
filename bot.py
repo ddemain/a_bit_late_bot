@@ -80,7 +80,7 @@ def change_text(message):
     bot.register_next_step_handler(sent, text_input)
 def text_input(message):
     global text
-    if re.search('^([А-Яа-яЁё]+\, )*[А-Яа-яЁё]+$', message) and len(message) <= 40:
+    if re.search('^([А-Яа-яЁё]+\,? )*[А-Яа-яЁё]+$', message) and len(message) <= 40:
         text = message
         bot.send_message(message.chat.id, 'хорошо. теперь нажми /gender и выбери голос для синтеза речи, если еще не нажимал.', reply_markup = main_markup)
     else:
