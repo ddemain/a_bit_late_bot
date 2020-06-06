@@ -82,6 +82,7 @@ def change_text(message):
     sent = bot.send_message(message.chat.id, 'ну давай, вводи.\nя принимаю только кириллицу, запятые, пробелы и не больше 40 знаков:')
     bot.register_next_step_handler(sent, text_input)
 def text_input(message):
+	message = message.text
     global text
     if re.search('^([А-Яа-яЁё]+\,? )*[А-Яа-яЁё]+$', message) and len(message) <= 40:
         text = message
@@ -96,6 +97,7 @@ def change_gender(message):
     sent = bot.send_message(message.chat.id, 'выбери голос:', reply_markup = gender_markup)
     bot.register_next_step_handler(sent, gender_input)
 def gender_input(message):
+	message = message.text
     global gender
     if gender == 'мужской' or gender == 'женский':
         gender = message
@@ -110,6 +112,7 @@ def listen_choose(message):
     sent = bot.send_message(message.chat.id, 'хочешь послушать озвученный текст без обработки?', reply_markup = listen_markup)
     bot.register_next_step_handler(sent, listen_input)
 def listen_input(message):
+	message = message.text
     global text
     global gender
     username = message.chat.username
@@ -134,6 +137,7 @@ def change_ik(message):
     sent = bot.send_message(message.chat.id, 'выбери интонационную конструкцию:', reply_markup = ik_markup)
     bot.register_next_step_handler(sent, ik_input)
 def ik_input(message):
+	message = message.text
     global ik
     ik_tuple = ('1', '2', '3', '4', '5', '6')
     if message.startswith('ик-') and message.endswith(ik_tuple):
@@ -152,6 +156,7 @@ def change_density(message):
     sent = bot.send_message(message.chat.id, 'выбери точность от 1 до 4. чем больше точность, тем плавнее интонационная кривая.\n\nхз зачем это надо, но пусть будет. это все будет развиваться в будущих версиях бота, так что stay tuned', reply_markup = density_markup)
     bot.register_next_step_handler(sent, density_input)
 def density_input(message):
+	message = message.text
     global density
     density_tuple = ('1', '2', '3', '4')
     if message in density_tuple:
@@ -170,6 +175,7 @@ def get_choose(message):
     sent = bot.send_message(message.chat.id, 'ты готов?', reply_markup = get_markup)
     bot.register_next_step_handler(sent, get_input)
 def get_input(message):
+	message = message.text
     global ik
     global density
     username = message.chat.username
