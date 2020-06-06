@@ -6,15 +6,17 @@ import re
 import os
 from os import path
 import requests
-from flask import Flask, request
-
+#from flask import Flask, request
+subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'requests[socks]')
+import 
+					   
 subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'praat-parselmouth'])
 import parselmouth
 from parselmouth.praat import call
 
 subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'pytelegrambotapi'])
 import telebot
-from telebot import types
+from telebot import types, apihelper
 
 ik_dict = {
 	'ик-1': (20,30,32,37,37,40,40,38,41,50,60,63,71,80,85,86,88,86,78,65,58,51,45,40,36,32,23,16,8,-1,-7,-15,-22,-27,-32,-38,-44,-49,-51,-52,-55,-54,-52,-49,-45,-47,-51,-54,-59,-62,-64,-66,-67,-67,-68,-69,-70,-71,-76,-79,-80,-81,-82,-82,-83),
@@ -78,11 +80,12 @@ density = None
 #_______________________________________________________________________________
 TOKEN = '1270782782:AAGAMAKT8d6tCCe6a4n8ByduSelw13-RCHs'
 bot = telebot.TeleBot(TOKEN)
-server = Flask(__name__)
-#
-PORT = int(os.environ.get('PORT', '8443'))
+'''
+server = Flask(__name__)	
+#	
+PORT = int(os.environ.get('PORT', '8443'))	
 HEROKU_APPNAME = 'really-usable-bot'
-#
+'''
 @bot.message_handler(commands = ['start'])
 def start_message(message):
 	main_markup = types.ReplyKeyboardMarkup(True)
@@ -204,7 +207,7 @@ def get_input(message):
 			bot.send_message(message.chat.id, 'для чего люди придумали кнопки?\n\nнажми /get еще раз. или не нажимай, раз не готов.')#, reply_markup = main_markup)
 	else:
 		bot.send_message(message.chat.id, 'что-то пошло не так. скорее всего, ты ввел не все параметры.\n\nпонажимай на /text, /gender, /ik и /density.')#, reply_markup = main_markup)
-#
+'''
 @server.route('/' + TOKEN, methods=['POST'])
 def getMessage():
 	bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
@@ -218,16 +221,14 @@ def webhook():
 	return "!", 200
 
 server.run(host="0.0.0.0", port=PORT)
-
-#__________________________________ эксперименты________________________________
-
 '''
+
 while True:
 	try:
 		bot.infinity_polling(True)
 	except Exception:
 		time.sleep(1)
-'''
+
 
 '''
 gender_list = ['мужской', 'женский']
