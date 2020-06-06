@@ -86,13 +86,13 @@ def start_message(message):
 #
 @bot.message_handler(commands = ['text'])
 def change_text(message):
-	sent = bot.send_message(message.chat.id, 'ну давай, вводи.\nя принимаю только кириллицу, запятые, пробелы и не больше 40 знаков:')
+	sent = bot.send_message(message.chat.id, 'ну давай, вводи.\n\nя принимаю только кириллицу, запятые, пробелы и не больше 40 знаков:')
 	bot.register_next_step_handler(sent, text_input)
 def text_input(message):
-	message = message.text
+	msg = message.text
 	global text
-	if re.search('^([А-Яа-яЁё]+\,? )*[А-Яа-яЁё]+$', message) and len(message) <= 40:
-		text = message
+	if re.search('^([А-Яа-яЁё]+\,? )*[А-Яа-яЁё]+$', msg) and len(msg) <= 40:
+		text = msg
 		bot.send_message(message.chat.id, 'хорошо. теперь нажми /gender и выбери голос для синтеза речи, если еще не нажимал.', reply_markup = main_markup)
 	else:
 		bot.send_message(message.chat.id, 'к сожалению, не вышло.\n\nпожалуйста, проверь текст еще раз и нажми /text.', reply_markup = main_markup)
@@ -104,10 +104,10 @@ def change_gender(message):
 	sent = bot.send_message(message.chat.id, 'выбери голос:', reply_markup = gender_markup)
 	bot.register_next_step_handler(sent, gender_input)
 def gender_input(message):
-	message = message.text
+	msg = message.text
 	global gender
 	if gender == 'мужской' or gender == 'женский':
-		gender = message
+		gender = msg
 		bot.send_message(message.chat.id, 'хорошо. теперь нажми /listen, если еще не нажимал.', reply_markup = main_markup)
 	else:
 		bot.send_message(message.chat.id, 'для чего люди придумали кнопки?\n\nнажми /gender еще раз.', reply_markup = main_markup)
@@ -119,17 +119,17 @@ def listen_choose(message):
 	sent = bot.send_message(message.chat.id, 'хочешь послушать озвученный текст без обработки?', reply_markup = listen_markup)
 	bot.register_next_step_handler(sent, listen_input)
 def listen_input(message):
-	message = message.text
+	msg = message.text
 	global text
 	global gender
 	username = message.chat.username
 	vocalize(text, gender, username)
 	if os.path.exists(f'/{username}/foo.wav'):
 		raw_audio = open(f'/{username}/foo.wav', rb)
-		if message == 'да':
+		if msg == 'да':
 			bot.send_voice(message.chat.id, raw_audio)
 			bot.send_message(message.chat.id, 'нравится? если не очень, поменяй голос, нажав на /gender.\n\nа если все устраивает, нажми /int, чтобы выбрать интонационную конструкцию, в которой ты хочешь слышать свой микротекст.', reply_markup = main_markup)
-		elif message == 'нет':
+		elif msg == 'нет':
 			bot.send_message(message.chat.id, 'ну ладно, как хочешь.\n\nнажми /int, чтобы выбрать интонационную конструкцию, в которой ты хочешь слышать свой микротекст.', reply_markup = main_markup)
 		else:
 			bot.send_message(message.chat.id, 'для чего люди придумали кнопки?\n\nнажми /listen еще раз. или не нажимай, раз не хочешь.', reply_markup = main_markup)
@@ -144,13 +144,13 @@ def change_ik(message):
 	sent = bot.send_message(message.chat.id, 'выбери интонационную конструкцию:', reply_markup = ik_markup)
 	bot.register_next_step_handler(sent, ik_input)
 def ik_input(message):
-	message = message.text
+	msg = message.text
 	global ik
 	ik_tuple = ('1', '2', '3', '4', '5', '6')
-	if message.startswith('ик-') and message.endswith(ik_tuple):
-		ik = message
+	if msg.startswith('ик-') and msg.endswith(ik_tuple):
+		ik = msg
 		bot.send_message(message.chat.id, 'круто. теперь нажми /density.', reply_markup = main_markup)
-	elif message.startswith('ик-') and message.endswith('7'):
+	elif msg.startswith('ик-') and msg.endswith('7'):
 		bot.send_message(message.chat.id, 'увы... нам такого не говорили. или мы забыли. не важно.\n\nнажми /ik, чтобы выбрать из имеющихся.', reply_markup = main_markup)
 	else:
 		bot.send_message(message.chat.id, 'для чего люди придумали кнопки?\n\nнажми /ik еще раз.', reply_markup = main_markup)
@@ -163,13 +163,13 @@ def change_density(message):
 	sent = bot.send_message(message.chat.id, 'выбери точность от 1 до 4. чем больше точность, тем плавнее интонационная кривая.\n\nхз зачем это надо, но пусть будет. это все будет развиваться в будущих версиях бота, так что stay tuned', reply_markup = density_markup)
 	bot.register_next_step_handler(sent, density_input)
 def density_input(message):
-	message = message.text
+	msg = message.text
 	global density
 	density_tuple = ('1', '2', '3', '4')
-	if message in density_tuple:
-		density = message
+	if msg in density_tuple:
+		density = msg
 		bot.send_message(message.chat.id, 'круто. осталось только нажать /get...', reply_markup = main_markup)
-	elif type(message) == int or type(message) == float:
+	elif type(int(msg)) == int or type(float(msg)) == float:
 		bot.send_message(message.chat.id, 'это не имеет смысла, поверь.\n\nнажми /density, чтобы выбрать из имеющихся.', reply_markup = main_markup)
 	else:
 		bot.send_message(message.chat.id, 'для чего люди придумали кнопки?\n\nнажми /density еще раз.', reply_markup = main_markup)
@@ -182,17 +182,17 @@ def get_choose(message):
 	sent = bot.send_message(message.chat.id, 'ты готов?', reply_markup = get_markup)
 	bot.register_next_step_handler(sent, get_input)
 def get_input(message):
-	message = message.text
+	msg = message.text
 	global ik
 	global density
 	username = message.chat.username
 	modify(ik, density, username)
 	if os.path.exists(f'/{username}/bar.wav'):
 		final_audio = open(f'/{username}/bar.wav', rb)
-		if message == 'да, капитан':
+		if msg == 'да, капитан':
 			bot.send_voice(message.chat.id, final_audio)
 			bot.send_message(message.chat.id, 'молодец. теперь бегай по командам и меняй параметры сколько душе угодно.', reply_markup = main_markup)
-		elif message == 'нет, капитан':
+		elif msg == 'нет, капитан':
 			bot.send_message(message.chat.id, 'ну ладно, как хочешь.\n\nможешь еще раз проверить все параметры и потом запускать.', reply_markup = main_markup)
 		else:
 			bot.send_message(message.chat.id, 'для чего люди придумали кнопки?\n\nнажми /get еще раз. или не нажимай, раз не готов.', reply_markup = main_markup)
